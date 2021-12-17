@@ -60,12 +60,11 @@ const Header = () => {
             </Link>
           </div>
         ) : (
-          <a
-            className="px-5 py-2 rounded-full bg-fashop-3 text-fashop-primary font-medium"
-            href="/api/auth/login"
-          >
-            login
-          </a>
+          <Link href="/api/auth/login">
+            <a className="px-5 py-2 rounded-full bg-fashop-3 text-fashop-primary font-medium">
+              login
+            </a>
+          </Link>
         )}
       </div>
     </div>
