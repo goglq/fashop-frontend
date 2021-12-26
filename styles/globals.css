@@ -2,18 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-.section::-webkit-scrollbar {
+.scroller::-webkit-scrollbar {
   width: 10px;
   scroll-behavior: smooth;
 }
 
-.section::-webkit-scrollbar-track {
+.scroller::-webkit-scrollbar-track {
   height: 5px;
   border-radius: 10px;
   background-color: white;
 }
 
-.section::-webkit-scrollbar-thumb {
+.scroller::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #c49db3;
+}
+
+.h-rel-screen {
+  min-height: calc(100vh - 8rem);
 }

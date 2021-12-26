@@ -43,3 +43,9 @@ export const AllCategoriesWithProductsQuery = gql`
     }
   }
 `
+
+export const GetTokenQuery = gql`
+  query {
+    accessToken
+  }
+`

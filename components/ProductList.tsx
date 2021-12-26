@@ -7,7 +7,7 @@ interface Props {
 
 const ProductList = ({ products }: Props) => {
   return (
-    <div className="flex space-x-5 pb-4 overflow-x-auto section">
+    <div className="flex space-x-5 pb-4 overflow-x-auto scroller">
       {products.map((product: ProductDto) => (
         <ProductCard key={product.id} product={product} />
       ))}

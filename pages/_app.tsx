@@ -2,11 +2,13 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { ComponentType } from 'react'
 
-import { UserProvider } from '@auth0/nextjs-auth0'
 import { ApolloProvider } from '@apollo/client'
+import store from '../app/store'
 
 import apolloClient from '../lib/apollo'
 import Header from '../components/Header'
+import { Provider } from 'react-redux'
+import AuthWrapper from '../components/AuthWrapper'
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps['Component'] & {
@@ -16,18 +18,20 @@ type ComponentWithPageLayout = AppProps & {
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   return (
-    <UserProvider>
+    <Provider store={store}>
       <ApolloProvider client={apolloClient}>
-        <Header />
-        {Component.PageLayout ? (
-          <Component.PageLayout>
+        <AuthWrapper>
+          <Header />
+          {Component.PageLayout ? (
+            <Component.PageLayout>
+              <Component {...pageProps} />
+            </Component.PageLayout>
+          ) : (
             <Component {...pageProps} />
-          </Component.PageLayout>
-        ) : (
-          <Component {...pageProps} />
-        )}
+          )}
+        </AuthWrapper>
       </ApolloProvider>
-    </UserProvider>
+    </Provider>
   )
 }
 
