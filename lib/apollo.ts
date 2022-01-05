@@ -18,12 +18,22 @@ let apolloClient: ApolloClient<NormalizedCacheObject>
 const httpLink = new HttpLink({ uri: `${API_URL}/graphql` })
 
 const authMiddleware = new ApolloLink((operation, forward) => {
-  operation.setContext(({ headers = {} }) => ({
-    headers: {
-      ...headers,
-      authorization: localStorage.getItem('token') || null,
-    },
-  }))
+  operation.setContext(({ headers = {} }) => {
+    if (typeof window === undefined) {
+      headers = {
+        ...headers,
+        authorization: localStorage.getItem('token') || null,
+      }
+    } else {
+      headers = {
+        ...headers,
+      }
+    }
+
+    return {
+      headers,
+    }
+  })
 
   return forward(operation)
 })
@@ -75,6 +85,11 @@ const onNotAuthenticated = onError(({ operation, graphQLErrors, forward }) => {
 apolloClient = new ApolloClient({
   link: ApolloLink.from([authMiddleware, onNotAuthenticated, httpLink]),
   cache: new InMemoryCache(),
+  defaultOptions: {
+    query: {
+      fetchPolicy: 'no-cache',
+    },
+  },
 })
 
 export default apolloClient

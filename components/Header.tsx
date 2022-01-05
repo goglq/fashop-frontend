@@ -12,9 +12,9 @@ const Header = () => {
       </div>
       <div className="flex items-center"></div>
       <div className="col-start-3 col-span-4">
-        <div className="flex items-center justify-center p-1 border-2 border-fashop-3 rounded-full bg-white">
+        <div className="flex p-1 items-center justify-center border-2 border-fashop-3 rounded-full bg-white">
           <input
-            className="flex-1 ml-4 outline-none font-medium"
+            className="flex-1 py-2 h-full ml-4 outline-none font-medium"
             type="text"
             placeholder="Search"
           />

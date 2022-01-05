@@ -5,6 +5,10 @@ export const AllProductsQuery = gql`
     products {
       id
       name
+      price
+      productImages {
+        url
+      }
     }
   }
 `
@@ -20,6 +24,25 @@ export const AllProductsWithCategoriesQuery = gql`
       }
     }
   }
+`
+
+export const getProductWithBrandQuery = (id: string) => gql`
+query {
+  product(id: ${id}) {
+    id
+    name
+    price
+    description
+    productImages {
+      id,
+      url
+    }
+    brand {
+      id
+      name
+    }
+  }
+}
 `
 
 export const AllCatagoriesQuery = gql`
@@ -40,6 +63,15 @@ export const AllCategoriesWithProductsQuery = gql`
         id
         name
       }
+    }
+  }
+`
+
+export const AllBrandsQuery = gql`
+  query {
+    brands {
+      id
+      name
     }
   }
 `
