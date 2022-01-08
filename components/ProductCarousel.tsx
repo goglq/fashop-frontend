@@ -16,7 +16,10 @@ const ProductImageCarousel = ({ className, productImages }: Props) => {
       <div className="h-full w-32 py-1 space-y-7 overflow-y-auto overflow-x-hidden scroller">
         {productImages &&
           productImages.map((productImage) => (
-            <div className="overflow-hidden rounded-lg transform transition-all duration-200 hover:-translate-y-1 hover:shadow-lg ease-in-out">
+            <div
+              key={productImage.id}
+              className="overflow-hidden rounded-lg transform transition-all duration-200 hover:-translate-y-1 hover:shadow-lg ease-in-out"
+            >
               <img
                 key={productImage.id}
                 src={productImage.url}
@@ -37,7 +40,7 @@ const ProductImageCarousel = ({ className, productImages }: Props) => {
             )[0].url
           }`}
           alt=""
-          className="h-full w-full rounded-lg"
+          className="h-full w-full object-contain rounded-lg"
         />
       </div>
     </div>

@@ -1,6 +1,15 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useAppDispatch, useAppSelector } from '../app/hooks'
+import { logout } from '../app/slices/userSlice'
+import LoggedInMenu from './LoggedInMenu'
 
 const Header = () => {
+  const dispatch = useAppDispatch()
+  const router = useRouter()
+
+  const isAuth = useAppSelector((_) => _.user.isAuth)
+
   return (
     <div className="grid px-5 grid-cols-8 grid-rows-1 items-center h-20">
       <div className="flex mt-5 h-full items-start col-span-1">
@@ -25,7 +34,22 @@ const Header = () => {
           </Link>
         </div>
       </div>
-      <div className="col-start-8 flex justify-end"></div>
+      <div className="col-start-7 col-span-8">
+        {isAuth ? (
+          <LoggedInMenu />
+        ) : (
+          <div className="flex justify-end space-x-2">
+            <Link href="/auth/login">
+              <a className="px-5 py-2 text-fashop-1 font-medium">Войти</a>
+            </Link>
+            <Link href="/auth/registration">
+              <a className="px-5 py-2 rounded-full bg-fashop-1 text-fashop-primary font-medium">
+                Зарегистрироваться
+              </a>
+            </Link>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

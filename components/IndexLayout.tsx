@@ -1,9 +1,11 @@
 import { ReactNode } from 'react'
 import Carousel from './Carousel'
+import Header from './Header'
 
 const IndexLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div>
+      <Header />
       <div className="flex justify-center bg-fashop-1">
         <Carousel />
       </div>

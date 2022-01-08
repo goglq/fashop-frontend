@@ -7,6 +7,7 @@ import {
   HttpLink,
   NormalizedCacheObject,
   fromPromise,
+  createHttpLink,
 } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
 import { GetTokenQuery } from '../graphql/queries'
@@ -15,7 +16,11 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
-const httpLink = new HttpLink({ uri: `${API_URL}/graphql` })
+//const httpLink = new HttpLink({ uri: `${API_URL}/graphql` })
+const httpLink = createHttpLink({
+  uri: `${API_URL}/graphql`,
+  credentials: 'include',
+})
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext(({ headers = {} }) => {

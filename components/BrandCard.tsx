@@ -1,15 +1,20 @@
+import Link from 'next/link'
+import { BrandDto } from '../dtos/BrandDto'
+
 type Props = {
-  img: string
+  brand: BrandDto
   className?: string
 }
 
-const BrandCard = ({ img, className }: Props) => {
+const BrandCard = ({ brand, className }: Props) => {
   return (
-    <div
-      className={`h-24 w-48 rounded-md bg-green-400 overflow-hidden cursor-pointer ${className}`}
-    >
-      <img src={img} alt="brand" />
-    </div>
+    <Link href={`/brand/${brand.id}`}>
+      <a
+        className={`h-24 w-48 rounded-md bg-green-400 overflow-hidden cursor-pointer ${className}`}
+      >
+        <img src={brand.brandImage.thumbnail} alt="brand" />
+      </a>
+    </Link>
   )
 }
 

@@ -2,6 +2,9 @@ import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
+import CommonFullLayout from '../../components/CommonFullLayout'
+import CommonLayout from '../../components/CommonLayout'
+import Loading from '../../components/Loading'
 import ProductImageCarousel from '../../components/ProductCarousel'
 import { ProductDto, ProductWithBrandDto } from '../../dtos/ProductDto'
 import {
@@ -18,7 +21,11 @@ const ProductPage = ({ product }: Props) => {
   const router = useRouter()
 
   if (router.isFallback) {
-    return <div>loading</div>
+    return (
+      <div className="flex justify-center items-center h-rel-screen">
+        <Loading />
+      </div>
+    )
   }
 
   return (
@@ -26,7 +33,7 @@ const ProductPage = ({ product }: Props) => {
       <div className="p-10 space-y-10">
         <div className="flex justify-between ml-10">
           <div className="flex space-x-2 text-4xl font-bold">
-            <Link href="/">
+            <Link href={`/brand/${product.brand.id}`}>
               <a className="px-3 rounded-md bg-white">{product.brand.name}</a>
             </Link>
             <h2>{product.name}</h2>
@@ -64,6 +71,8 @@ const ProductPage = ({ product }: Props) => {
     </div>
   )
 }
+
+ProductPage.PageLayout = CommonFullLayout
 
 interface IParams extends ParsedUrlQuery {
   id: string

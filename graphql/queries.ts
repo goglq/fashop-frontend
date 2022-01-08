@@ -72,6 +72,33 @@ export const AllBrandsQuery = gql`
     brands {
       id
       name
+      brandImage {
+        id
+        thumbnail
+        header
+      }
+    }
+  }
+`
+
+export const BrandIdsQuery = gql`
+  query {
+    brands {
+      id
+    }
+  }
+`
+
+export const BrandQuery = gql`
+  query BrandQuery($id: Int!) {
+    brand(id: $id) {
+      id
+      name
+      brandImage {
+        id
+        header
+        thumbnail
+      }
     }
   }
 `

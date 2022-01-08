@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { UserDto } from '../../dtos/UserDto'
 import { fetchQuery } from '../../lib/apollo'
 import { CommonFlag } from '../CommonFlag'
@@ -35,6 +35,14 @@ export const userSlice = createSlice({
     clearFlag: (state) => {
       state.flag = CommonFlag.Idle
     },
+    login: (state, action: PayloadAction<string>) => {
+      state.isAuth = true
+      localStorage.setItem('token', action.payload)
+    },
+    logout: (state) => {
+      state.isAuth = false
+      localStorage.removeItem('token')
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -53,5 +61,7 @@ export const userSlice = createSlice({
       })
   },
 })
+
+export const { clearFlag, login, logout } = userSlice.actions
 
 export default userSlice.reducer

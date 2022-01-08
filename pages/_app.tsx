@@ -21,7 +21,6 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>
         <AuthWrapper>
-          <Header />
           {Component.PageLayout ? (
             <Component.PageLayout>
               <Component {...pageProps} />
