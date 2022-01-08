@@ -102,8 +102,6 @@ const Carousel = () => {
           width="24"
           height="24"
           xmlns="http://www.w3.org/2000/svg"
-          fill-rule="evenodd"
-          clip-rule="evenodd"
           transform="scale(-1,1)"
         >
           <path d="M4 .755l14.374 11.245-14.374 11.219.619.781 15.381-12-15.391-12-.609.755z" />
@@ -114,13 +112,7 @@ const Carousel = () => {
         className="absolute right-0 flex justify-center items-center text-3xl inset-y-1/2 text-white cursor-pointer w-16 h-16 transform -translate-y-10 -scale-y-2"
         onClick={nextSlide}
       >
-        <svg
-          width="24"
-          height="24"
-          xmlns="http://www.w3.org/2000/svg"
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-        >
+        <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
           <path d="M4 .755l14.374 11.245-14.374 11.219.619.781 15.381-12-15.391-12-.609.755z" />
         </svg>
       </div>
