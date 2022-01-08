@@ -14,12 +14,15 @@ import { GetTokenQuery } from '../graphql/queries'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
+const CREDENTIALS =
+  process.env.NODE_ENV === 'development' ? 'include' : 'same-origin'
+
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
 //const httpLink = new HttpLink({ uri: `${API_URL}/graphql` })
 const httpLink = createHttpLink({
   uri: `${API_URL}/graphql`,
-  credentials: 'include',
+  credentials: CREDENTIALS,
 })
 
 const authMiddleware = new ApolloLink((operation, forward) => {
