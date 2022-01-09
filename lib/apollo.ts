@@ -4,7 +4,6 @@ import {
   ApolloLink,
   DocumentNode,
   InMemoryCache,
-  HttpLink,
   NormalizedCacheObject,
   fromPromise,
   createHttpLink,
@@ -22,7 +21,7 @@ let apolloClient: ApolloClient<NormalizedCacheObject>
 //const httpLink = new HttpLink({ uri: `${API_URL}/graphql` })
 const httpLink = createHttpLink({
   uri: `${API_URL}/graphql`,
-  credentials: CREDENTIALS,
+  credentials: 'include',
 })
 
 const authMiddleware = new ApolloLink((operation, forward) => {
