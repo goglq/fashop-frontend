@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { useAppDispatch } from '../app/hooks'
 import { logout } from '../app/slices/userSlice'
 import { LogoutMutation } from '../graphql/auth'
+import Loading from './Loading'
 
 const LoggedInMenu = () => {
   const router = useRouter()
@@ -19,7 +20,12 @@ const LoggedInMenu = () => {
     }
   }, [data, router])
 
-  if (loading) return <div>loading...</div>
+  if (loading)
+    return (
+      <div className="flex justify-end">
+        <Loading />
+      </div>
+    )
 
   if (error) return <div>{error.message}</div>
 
