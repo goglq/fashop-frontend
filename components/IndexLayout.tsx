@@ -7,7 +7,7 @@ const IndexLayout = ({ children }: { children: ReactNode }) => {
     <div>
       <Header />
       <div className="flex justify-center bg-fashop-1">
-        <Carousel />
+        {/* <Carousel /> */}
       </div>
       <div className="container mx-auto mt-10">{children}</div>
     </div>

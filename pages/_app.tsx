@@ -6,9 +6,12 @@ import { ApolloProvider } from '@apollo/client'
 import store from '../app/store'
 
 import apolloClient from '../lib/apollo'
-import Header from '../components/Header'
 import { Provider } from 'react-redux'
 import AuthWrapper from '../components/AuthWrapper'
+
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+config.autoAddCss = false
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps['Component'] & {

@@ -7,8 +7,8 @@ import Loading from '../../components/Loading'
 import ProductList from '../../components/ProductList'
 import { BrandDto } from '../../dtos/BrandDto'
 import {
-  AllProductsQuery,
   BrandIdsQuery,
+  BrandProductsQuery,
   BrandQuery,
 } from '../../graphql/queries'
 import apolloClient from '../../lib/apollo'
@@ -20,7 +20,9 @@ type Props = {
 const BrandPage = ({ brand }: Props) => {
   const router = useRouter()
 
-  const { data, loading, error } = useQuery(AllProductsQuery)
+  const { data, loading, error } = useQuery(BrandProductsQuery, {
+    variables: { brandId: brand.id },
+  })
 
   if (router.isFallback || loading) {
     return (
@@ -69,7 +71,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { id } = context.params as IParams
-  const { data, error } = await apolloClient.query({
+  const { data } = await apolloClient.query({
     query: BrandQuery,
     variables: { id: parseInt(id) },
   })

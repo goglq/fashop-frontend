@@ -11,7 +11,6 @@ const LoginPage = () => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [errors, setErrors] = useState<string[]>([])
 
   const [loginFunction, { data, loading, error }] = useMutation(LoginMutation)
 
@@ -22,17 +21,6 @@ const LoginPage = () => {
       router.back()
     }
   }, [data, router, dispatch])
-
-  // useEffect(() => {
-  //   console.log('errors, error')
-  //   if (error !== undefined) {
-  //     console.log(error)
-  //     const tmpErrors: string[] = error.graphQLErrors.map(
-  //       (graphQLError) => graphQLError.extensions.message
-  //     )
-  //     setErrors(tmpErrors)
-  //   }
-  // }, [errors, error])
 
   useEffect(() => {
     console.log('using effect')

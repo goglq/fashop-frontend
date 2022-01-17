@@ -2,11 +2,41 @@ import { gql } from '@apollo/client'
 
 export const AllProductsQuery = gql`
   query {
-    products {
+    products(order: { id: DESC }) {
       id
       name
       price
       productImages {
+        id
+        url
+      }
+    }
+  }
+`
+
+export const BrandProductsQuery = gql`
+  query BrandProducts($brandId: Int!) {
+    products(where: { brandId: { eq: $brandId } }) {
+      id
+      name
+      price
+      productImages {
+        id
+        url
+      }
+    }
+  }
+`
+
+export const SearchProductsQuery = gql`
+  query SearchProducts($text: String!) {
+    products(where: { name: { contains: $text } }) {
+      id
+      name
+      price
+      description
+      productImages {
+        id
         url
       }
     }

@@ -1,12 +1,16 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useAppDispatch, useAppSelector } from '../app/hooks'
-import { logout } from '../app/slices/userSlice'
+import { useState } from 'react'
+import { useAppSelector } from '../app/hooks'
+import LoggedInHamburger from './LoggedInHamburger'
 import LoggedInMenu from './LoggedInMenu'
 
 const Header = () => {
-  const dispatch = useAppDispatch()
   const router = useRouter()
+
+  const { search } = router.query
+
+  const [searchText, setSearchText] = useState(search)
 
   const isAuth = useAppSelector((_) => _.user.isAuth)
 
@@ -26,9 +30,11 @@ const Header = () => {
             className="flex-1 py-2 h-full ml-4 outline-none font-medium"
             type="text"
             placeholder="Search"
+            value={searchText}
+            onChange={(e) => setSearchText(e.currentTarget.value)}
           />
-          <Link href="/search">
-            <a className="px-10 py-2 rounded-full bg-fashop-3 text-white font-medium">
+          <Link href={{ pathname: '/search', query: { search: searchText } }}>
+            <a className="px-10 py-2 rounded-full bg-fashop-3 text-white font-medium transition transform hover:scale-103 hover:bg-fashop-2 duration-300 ease-in-out">
               Search
             </a>
           </Link>
@@ -36,7 +42,7 @@ const Header = () => {
       </div>
       <div className="col-start-7 col-span-8">
         {isAuth ? (
-          <LoggedInMenu />
+          <LoggedInHamburger />
         ) : (
           <div className="flex justify-end space-x-2">
             <Link href="/auth/login">

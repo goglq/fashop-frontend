@@ -18,7 +18,7 @@ const ProductImageCarousel = ({ className, productImages }: Props) => {
           productImages.map((productImage) => (
             <div
               key={productImage.id}
-              className="overflow-hidden rounded-lg transform transition-all duration-200 hover:-translate-y-1 hover:shadow-lg ease-in-out"
+              className="overflow-hidden rounded-lg transform transition-all duration-200 hover:-translate-y-1 hover:shadow-lg ease-in-out cursor-pointer"
             >
               <img
                 key={productImage.id}

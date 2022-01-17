@@ -11,10 +11,15 @@ const ProfilePage = () => {
 
   return (
     <div className="grid grid-cols-2 gap-5 h-rel-screen mt-5 px-5">
-      <div className="rounded-xl bg-gray-100">
-        <h2>{data.self.email}</h2>
+      <div className="rounded-xl bg-gray-100 p-5">
+        <div>
+          <p>Почта</p>
+          <p>{data.self.email}</p>
+          <span>{data.self.isEmailVerified}</span>
+        </div>
+        <div></div>
       </div>
-      <div className="rounded-xl bg-gray-100"></div>
+      <div className="rounded-xl bg-gray-100 p-5"></div>
     </div>
   )
 }

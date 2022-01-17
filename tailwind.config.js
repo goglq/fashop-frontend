@@ -3,7 +3,7 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      height: {
+      spacing: {
         100: '25rem',
         104: '26rem',
         108: '27rem',
@@ -26,6 +26,12 @@ module.exports = {
         176: '44rem',
         180: '45rem',
       },
+      scale: {
+        101: '1.01',
+        102: '1.02',
+        103: '1.03',
+        104: '1.04',
+      },
       colors: {
         'fashop-primary': '#f6f9fb',
         'fashop-1': '#6c5485',
@@ -34,10 +40,16 @@ module.exports = {
         'fashop-4': '#c49db3',
         'fashop-5': '#c49db3',
       },
+      transitionProperty: {
+        width: 'width',
+      },
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      scale: ['group-hover'],
+      borderRadius: ['group-hover'],
+    },
   },
   plugins: [],
 }

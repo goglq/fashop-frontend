@@ -21,7 +21,7 @@ const Home = () => {
     <div>
       <div className="space-y-10 pb-10">
         <div className="space-y-2">
-          <span className="text-2xl font-medium">Рекомендуемые</span>
+          <span className="text-2xl font-medium">Новые товары</span>
           <ProductList products={productsQuery.data.products} />
         </div>
         <div className="grid grid-rows-2 md:grid-rows-1 md:grid-cols-2 gap-3 h-120 md:h-64">
