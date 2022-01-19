@@ -48,7 +48,7 @@ const BrandPage = ({ brand }: Props) => {
   return (
     <div className="space-y-5">
       <div className="rounded-lg overflow-hidden">
-        <img className="h-12 w-full" src={brand.brandImage.header} alt="" />
+        <img className="h-48 w-full" src={brand.brandImage.header} alt="" />
       </div>
       <div className="space-y-3">
         <div className="ml-1 text-2xl font-medium">Товары</div>
