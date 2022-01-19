@@ -1,14 +1,51 @@
 import { gql } from '@apollo/client'
 
-export const AllProductsQuery = gql`
-  query {
-    products(order: { id: DESC }) {
-      id
-      name
-      price
-      productImages {
+export const CountProductsQuery = gql`
+  query AllProducts($count: Int!) {
+    products(order: { id: DESC }, first: $count) {
+      nodes {
         id
-        url
+        name
+        price
+        sale
+        productImages {
+          id
+          url
+        }
+      }
+    }
+  }
+`
+
+export const AllProductsQuery = gql`
+  query AllProducts {
+    products(order: { id: DESC }) {
+      nodes {
+        id
+        name
+        price
+        sale
+        productImages {
+          id
+          url
+        }
+      }
+    }
+  }
+`
+
+export const RandomProductsQuery = gql`
+  query RandomProductsQuery($count: Int!) {
+    randomProducts(first: $count) {
+      nodes {
+        id
+        name
+        price
+        sale
+        productImages {
+          id
+          url
+        }
       }
     }
   }
@@ -17,12 +54,32 @@ export const AllProductsQuery = gql`
 export const BrandProductsQuery = gql`
   query BrandProducts($brandId: Int!) {
     products(where: { brandId: { eq: $brandId } }) {
-      id
-      name
-      price
-      productImages {
+      nodes {
         id
-        url
+        name
+        price
+        sale
+        productImages {
+          id
+          url
+        }
+      }
+    }
+  }
+`
+
+export const BrandSaleProductsQuery = gql`
+  query BrandSaleProducts($brandId: Int!) {
+    products(where: { brandId: { eq: $brandId }, and: { sale: { gt: 0 } } }) {
+      nodes {
+        id
+        name
+        price
+        sale
+        productImages {
+          id
+          url
+        }
       }
     }
   }

@@ -10,9 +10,9 @@ const CartCounter = ({ cart }: Props) => {
       <button className="flex justify-center items-center w-10 h-10 rounded-md bg-red-200">
         -
       </button>
-      <span className="flex justify-center items-center text-xl w-10 h-10 bg-gray-200 rounded-md cursor-default">
-        {cart.count}
-      </span>
+      <div className="flex justify-center items-center w-10 h-10 bg-gray-200 rounded-md cursor-default">
+        <span className="text-xl">{cart.count}</span>
+      </div>
       <button className="flex justify-center items-center w-10 h-10 rounded-md bg-green-200">
         +
       </button>

@@ -10,6 +10,7 @@ import {
   BrandIdsQuery,
   BrandProductsQuery,
   BrandQuery,
+  BrandSaleProductsQuery,
 } from '../../graphql/queries'
 import apolloClient from '../../lib/apollo'
 
@@ -20,11 +21,15 @@ type Props = {
 const BrandPage = ({ brand }: Props) => {
   const router = useRouter()
 
-  const { data, loading, error } = useQuery(BrandProductsQuery, {
+  const BrandProducts = useQuery(BrandProductsQuery, {
     variables: { brandId: brand.id },
   })
 
-  if (router.isFallback || loading) {
+  const BrandSaleProducts = useQuery(BrandSaleProductsQuery, {
+    variables: { brandId: brand.id },
+  })
+
+  if (router.isFallback || BrandProducts.loading || BrandSaleProducts.loading) {
     return (
       <div className="flex justify-center items-center h-rel-screen">
         <Loading />
@@ -32,7 +37,9 @@ const BrandPage = ({ brand }: Props) => {
     )
   }
 
-  if (error) return <div>{error.message}</div>
+  if (BrandProducts.error) return <div>{BrandProducts.error.message}</div>
+  if (BrandSaleProducts.error)
+    return <div>{BrandSaleProducts.error.message}</div>
 
   return (
     <div className="space-y-5">
@@ -41,11 +48,13 @@ const BrandPage = ({ brand }: Props) => {
       </div>
       <div className="space-y-3">
         <div className="ml-1 text-2xl font-medium">Товары</div>
-        <ProductList products={data.products}></ProductList>
+        <ProductList products={BrandProducts.data.products.nodes}></ProductList>
       </div>
-      <div className="space-y-3">
+      <div className="space-y-3 pb-10">
         <div className="ml-1 text-2xl font-medium">Скидки</div>
-        <ProductList products={data.products}></ProductList>
+        <ProductList
+          products={BrandSaleProducts.data.products.nodes}
+        ></ProductList>
       </div>
     </div>
   )

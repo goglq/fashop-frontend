@@ -101,7 +101,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     query: AllProductsQuery,
   })
 
-  const paths = productIds.data.products.map((productId: ProductDto) => ({
+  const paths = productIds.data.products.nodes.map((productId: ProductDto) => ({
     params: { id: productId.id.toString() },
   }))
 

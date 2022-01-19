@@ -5,7 +5,8 @@ import ProductImageDto from './ProductImageDto'
 export interface ProductDto {
   id: number
   name: string
-  price: string
+  price: number
+  sale: number
   description: string
   productImages: ProductImageDto[]
 }

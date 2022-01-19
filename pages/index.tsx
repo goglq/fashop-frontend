@@ -1,7 +1,12 @@
 import { gql, useQuery } from '@apollo/client'
 import IndexLayout from '../components/IndexLayout'
 import ProductList from '../components/ProductList'
-import { AllBrandsQuery, AllProductsQuery } from '../graphql/queries'
+import {
+  AllBrandsQuery,
+  AllProductsQuery,
+  CountProductsQuery,
+  RandomProductsQuery,
+} from '../graphql/queries'
 import ProductCard from '../components/ProductCard'
 import LargeCommercialCard from '../components/LargeCommercialCard'
 import BrandCard from '../components/BrandCard'
@@ -9,9 +14,15 @@ import { ProductDto } from '../dtos/ProductDto'
 import { BrandDto } from '../dtos/BrandDto'
 
 const Home = () => {
-  const productsQuery = useQuery(AllProductsQuery)
+  const productsQuery = useQuery(CountProductsQuery, {
+    variables: { count: 20 },
+  })
 
   const brandsQuery = useQuery(AllBrandsQuery)
+
+  const randomQuery = useQuery(RandomProductsQuery, {
+    variables: { count: 14 },
+  })
 
   if (productsQuery.loading) return <p>Loading...</p>
 
@@ -22,7 +33,7 @@ const Home = () => {
       <div className="space-y-10 pb-10">
         <div className="space-y-2">
           <span className="text-2xl font-medium">Новые товары</span>
-          <ProductList products={productsQuery.data.products} />
+          <ProductList products={productsQuery.data.products.nodes} />
         </div>
         <div className="grid grid-rows-2 md:grid-rows-1 md:grid-cols-2 gap-3 h-120 md:h-64">
           <LargeCommercialCard img="" />
@@ -31,9 +42,12 @@ const Home = () => {
         <div className="space-y-2">
           <span className="text-2xl font-medium">Возможно вам понравится</span>
           <div className="grid grid-rows-2 grid-cols-7 gap-7">
-            {productsQuery.data.products.map((product: ProductDto) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+            {randomQuery.data &&
+              randomQuery.data.randomProducts.nodes.map(
+                (product: ProductDto) => (
+                  <ProductCard key={product.id} product={product} />
+                )
+              )}
           </div>
         </div>
         <div className="grid grid-rows-2 md:grid-rows-1 md:grid-cols-2 gap-3 h-120 md:h-64">

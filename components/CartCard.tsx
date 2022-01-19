@@ -31,7 +31,7 @@ const CartCard = ({ cart }: Props) => {
   }, [data, carts])
 
   return (
-    <div className="grid grid-cols-2 w-full rounded-lg bg-white">
+    <div className="grid grid-cols-3 w-full rounded-lg bg-white">
       <div className="flex items-center">
         <img
           className="w-20 h-20 object-contain p-1 rounded-lg"
@@ -40,11 +40,13 @@ const CartCard = ({ cart }: Props) => {
         />
         <p className="text-2xl">{cart.product.name}</p>
       </div>
-      <div className="flex justify-end items-center pr-5 space-x-10">
+      <div className="flex justify-center">
         <CartCounter cart={cart} />
+      </div>
+      <div className="flex justify-between items-center pr-5 space-x-10">
         <p className="text-3xl mr-10">${cart.product.price}</p>
         <button
-          className="px-5 py-2 rounded-md bg-red-500 text-3xl text-white font-bold"
+          className="px-5 py-2 rounded-md bg-red-400 text-3xl text-white font-bold"
           onClick={(e) => {
             DeleteCartFunction({ variables: { id: cart.id } })
           }}
