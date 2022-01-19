@@ -109,7 +109,10 @@ const OrderPage = ({ userCarts }: Props) => {
         {cartQuery.data && (
           <div className="space-y-2 mt-5">
             {cartQuery.data.userCarts.map((cart: CartDto) => (
-              <div className="flex justify-between px-4 py-2 rounded-md bg-white">
+              <div
+                key={cart.id}
+                className="flex justify-between px-4 py-2 rounded-md bg-white"
+              >
                 <div>{cart.product.name}</div>
                 <div>{cart.product.price}</div>
               </div>

@@ -21,7 +21,7 @@ const SearchPage = () => {
       {data === undefined}
       {data &&
         data.products.map((product: ProductDto) => (
-          <Link href={`/product/${product.id}`}>
+          <Link key={product.id} href={`/product/${product.id}`}>
             <div className="grid grid-cols-6 p-3 rounded-xl bg-fashop-4 overflow-hidden cursor-pointer transform transition hover:scale-102">
               <img
                 className="w-48 h-48 object-contain rounded-md"
