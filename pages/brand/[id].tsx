@@ -1,7 +1,8 @@
-import { useQuery } from '@apollo/client'
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { useLazyQuery, useQuery } from '@apollo/client'
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
+import { useEffect } from 'react'
 import CommonLayout from '../../components/CommonLayout'
 import Loading from '../../components/Loading'
 import ProductList from '../../components/ProductList'
@@ -21,15 +22,19 @@ type Props = {
 const BrandPage = ({ brand }: Props) => {
   const router = useRouter()
 
-  const BrandProducts = useQuery(BrandProductsQuery, {
-    variables: { brandId: brand.id },
-  })
+  const [getBrandProducts, BrandProducts] = useLazyQuery(BrandProductsQuery)
+  const [getBrandSaleProducts, BrandSaleProducts] = useLazyQuery(
+    BrandSaleProductsQuery
+  )
 
-  const BrandSaleProducts = useQuery(BrandSaleProductsQuery, {
-    variables: { brandId: brand.id },
-  })
+  useEffect(() => {
+    if (brand) {
+      getBrandProducts({ variables: { brandId: brand.id } })
+      getBrandSaleProducts({ variables: { brandId: brand.id } })
+    }
+  }, [brand])
 
-  if (router.isFallback || BrandProducts.loading || BrandSaleProducts.loading) {
+  if (router.isFallback) {
     return (
       <div className="flex justify-center items-center h-rel-screen">
         <Loading />
@@ -37,9 +42,8 @@ const BrandPage = ({ brand }: Props) => {
     )
   }
 
-  if (BrandProducts.error) return <div>{BrandProducts.error.message}</div>
-  if (BrandSaleProducts.error)
-    return <div>{BrandSaleProducts.error.message}</div>
+  if (!BrandProducts.data || !BrandSaleProducts.data)
+    return <div>brand undefined</div>
 
   return (
     <div className="space-y-5">
@@ -48,13 +52,25 @@ const BrandPage = ({ brand }: Props) => {
       </div>
       <div className="space-y-3">
         <div className="ml-1 text-2xl font-medium">Товары</div>
-        <ProductList products={BrandProducts.data.products.nodes}></ProductList>
+        {BrandProducts.error && <div>{BrandProducts.error.message}</div>}
+        {BrandProducts.loading && <Loading />}
+        {BrandProducts.data && (
+          <ProductList
+            products={BrandProducts.data.products.nodes}
+          ></ProductList>
+        )}
       </div>
       <div className="space-y-3 pb-10">
         <div className="ml-1 text-2xl font-medium">Скидки</div>
-        <ProductList
-          products={BrandSaleProducts.data.products.nodes}
-        ></ProductList>
+        {BrandSaleProducts.error && (
+          <div>{BrandSaleProducts.error.message}</div>
+        )}
+        {BrandSaleProducts.loading && <Loading />}
+        {BrandSaleProducts.data && (
+          <ProductList
+            products={BrandSaleProducts.data.products.nodes}
+          ></ProductList>
+        )}
       </div>
     </div>
   )
@@ -74,7 +90,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const paths = brandsIds.data.brands.map((brand: BrandDto) => ({
     params: { id: brand.id.toString() },
   }))
-
   return { paths, fallback: true }
 }
 
@@ -84,12 +99,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
     query: BrandQuery,
     variables: { id: parseInt(id) },
   })
-
   return {
     props: {
       brand: data.brand,
     },
-    revalidate: 5,
+    revalidate: 10,
   }
 }
 

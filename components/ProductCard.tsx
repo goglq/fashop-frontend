@@ -7,6 +7,8 @@ interface Props {
 }
 
 const ProductCard = ({ product, className }: Props) => {
+  console.log(product.id)
+
   return (
     <Link href={`/product/${product.id}`}>
       <div
