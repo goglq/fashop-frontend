@@ -90,11 +90,11 @@ const CreateProductPage = () => {
       <div className="row-span-6 flex flex-col justify-between h-full space-y-3 rounded-lg bg-gray-200 p-5">
         <div className="flex flex-col space-y-4">
           <h2 className="text-2xl font-medium">Создание товара</h2>
-          {/* {error && (
+          {error && (
             <div className="px-2 py-1 rounded-md bg-red-500 text-white font-medium">
-              {error.graphQLErrors[0].extensions.message}
+              {error.message}
             </div>
-          )} */}
+          )}
           <input
             className="px-3 py-2 rounded-md font-medium outline-none"
             type="text"

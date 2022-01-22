@@ -69,11 +69,11 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.currentTarget.value)}
           />
         </div>
-        {/* {error && (
+        {error && (
           <div className="py-2 rounded-md bg-red-500 text-white font-medium text-center">
-            {error.graphQLErrors}
+            {error.message}
           </div>
-        )} */}
+        )}
         <div className="flex flex-col space-y-2">
           <button
             className="py-2 rounded-md bg-fashop-1 text-white"
