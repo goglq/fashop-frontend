@@ -14,7 +14,10 @@ const ProductCard = ({ product, className }: Props) => {
       <div
         className={`flex-shrink-0 w-48 rounded-md shadow-md overflow-hidden cursor-pointer ${className}`}
       >
-        <img className="object-cover" src={`${product.productImages[0].url}`} />
+        <img
+          className="h-48 object-cover"
+          src={`${product.productImages[0]?.url}`}
+        />
         <div className="mx-5 my-2 space-y-2">
           <p className="truncate text-lg font-medium leading-5">
             {product.name}
@@ -27,7 +30,7 @@ const ProductCard = ({ product, className }: Props) => {
                   : 'text-xl font-bold leading-5'
               }
             >
-              ${product.price}
+              {product.price} &#8381;
             </p>
             <p
               className={
@@ -36,10 +39,10 @@ const ProductCard = ({ product, className }: Props) => {
                   : 'text-xl font-bold leading-5 hidden'
               }
             >
-              $
               {(product.price - (product.price * product.sale) / 100).toFixed(
                 2
-              )}
+              )}{' '}
+              &#8381;
             </p>
           </div>
         </div>

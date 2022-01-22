@@ -3,6 +3,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
+import { useAppSelector } from '../../app/hooks'
 import CommonFullLayout from '../../components/CommonFullLayout'
 import Loading from '../../components/Loading'
 import ProductImageCarousel from '../../components/ProductCarousel'
@@ -23,6 +24,8 @@ const ProductPage = ({ product }: Props) => {
 
   const [addCartFunction, { data, loading, error }] =
     useMutation(AddCartMutation)
+
+  const isAuth = useAppSelector((state) => state.user.isAuth)
 
   if (router.isFallback) {
     return (
@@ -60,12 +63,17 @@ const ProductPage = ({ product }: Props) => {
         <div className="grid grid-cols-2 ml-10">
           <ProductImageCarousel productImages={product.productImages} />
           <div className="flex flex-col space-y-8">
-            <span className="text-4xl font-bold">${product.price}</span>
+            <span className="text-4xl font-bold">{product.price} &#8381;</span>
             <div className="grid grid-cols-2 gap-4">
               <button
                 className="p-4 rounded-md bg-fashop-2 text-xl text-white font-bold transform transition hover:scale-102 ease-in-out"
                 onClick={(e) => {
                   e.preventDefault()
+                  if (!isAuth) {
+                    router.push('/auth/login')
+                    return
+                  }
+
                   addCartFunction({
                     variables: { count: 1, productId: product.id },
                   })
@@ -77,14 +85,13 @@ const ProductPage = ({ product }: Props) => {
                 Экспресс покупка
               </button> */}
             </div>
+            <div className="space-y-5">
+              <span className="text-4xl font-bold">Описание</span>
+              <p>{product.description}</p>
+            </div>
           </div>
         </div>
-        <div className="grid grid-cols-2 ml-10 pr-32">
-          <div className="space-y-5">
-            <span className="text-4xl font-bold">Описание</span>
-            <p>{product.description}</p>
-          </div>
-        </div>
+        <div className="grid grid-cols-2 ml-10 pr-32"></div>
       </div>
     </div>
   )

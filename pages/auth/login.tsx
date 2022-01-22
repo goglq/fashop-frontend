@@ -5,6 +5,10 @@ import { LoginMutation } from '../../graphql/auth'
 import { login } from '../../app/slices/userSlice'
 import { useRouter } from 'next/router'
 import Loading from '../../components/Loading'
+import Link from 'next/link'
+import CommonLayout from '../../components/CommonLayout'
+import CommonFullLayout from '../../components/CommonFullLayout'
+import AuthLayout from '../../components/AuthLayout'
 const LoginPage = () => {
   const router = useRouter()
   const dispatch = useAppDispatch()
@@ -16,9 +20,9 @@ const LoginPage = () => {
 
   useEffect(() => {
     console.log('data, router, dispatch')
-    if (data !== undefined) {
+    if (data) {
       dispatch(login(data.loginUser.tokens.accessToken))
-      router.back()
+      router.push('/')
     }
   }, [data, router, dispatch])
 
@@ -68,9 +72,17 @@ const LoginPage = () => {
           >
             Логин
           </button>
+          <Link href="/auth/registration">
+            <a
+              className="flex justify-center items-center py-2 rounded-md bg-fashop-1 text-white"
+              type="submit"
+            >
+              Регистрация
+            </a>
+          </Link>
           {error && (
             <div className="rounded-md bg-red-500 text-white font-medium text-center">
-              {error?.graphQLErrors[0].extensions.message}
+              {error.graphQLErrors[0].extensions.message}
             </div>
           )}
         </div>
@@ -78,5 +90,7 @@ const LoginPage = () => {
     </div>
   )
 }
+
+LoginPage.PageLayout = AuthLayout
 
 export default LoginPage

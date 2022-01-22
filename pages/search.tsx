@@ -20,7 +20,7 @@ const SearchPage = () => {
     <div className="flex flex-col py-5 space-y-5">
       {data === undefined}
       {data &&
-        data.products.map((product: ProductDto) => (
+        data.searchProducts.map((product: ProductDto) => (
           <Link key={product.id} href={`/product/${product.id}`}>
             <div className="grid grid-cols-6 p-3 rounded-xl bg-fashop-4 overflow-hidden cursor-pointer transform transition hover:scale-102">
               <img

@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import AuthLayout from '../../components/AuthLayout'
 import Loading from '../../components/Loading'
 import { RegisterMutation } from '../../graphql/auth'
 
@@ -15,8 +16,8 @@ const RegistrationPage = () => {
     useMutation(RegisterMutation)
 
   useEffect(() => {
-    if (data !== undefined) {
-      router.back()
+    if (data) {
+      router.push('/auth/login')
     }
   }, [data, router])
 
@@ -26,8 +27,6 @@ const RegistrationPage = () => {
         <Loading />
       </div>
     )
-
-  if (error) return `Submission error! ${error.message}`
 
   return (
     <div className="flex justify-center items-center h-screen">
@@ -45,13 +44,11 @@ const RegistrationPage = () => {
               password: password,
             },
           })
-
-          router.back()
         }}
       >
         <div className="flex flex-col space-y-3">
           <input
-            type="text"
+            type="email"
             placeholder="email"
             className="px-2 py-1 rounded-md outline-none"
             value={email}
@@ -72,6 +69,11 @@ const RegistrationPage = () => {
             onChange={(e) => setRepeatPassword(e.currentTarget.value)}
           />
         </div>
+        {error && (
+          <div className="flex justify-center items-center py-2 rounded-md bg-red-500 text-white font-medium">
+            {error.graphQLErrors[0].extensions.message}
+          </div>
+        )}
         <button
           className="py-2 rounded-md bg-fashop-1 text-white"
           type="submit"
@@ -82,5 +84,7 @@ const RegistrationPage = () => {
     </div>
   )
 }
+
+RegistrationPage.PageLayout = AuthLayout
 
 export default RegistrationPage

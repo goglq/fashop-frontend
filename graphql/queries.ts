@@ -87,7 +87,7 @@ export const BrandSaleProductsQuery = gql`
 
 export const SearchProductsQuery = gql`
   query SearchProducts($text: String!) {
-    products(where: { name: { contains: $text } }) {
+    searchProducts(text: $text) {
       id
       name
       price
@@ -193,5 +193,16 @@ export const BrandQuery = gql`
 export const GetTokenQuery = gql`
   query {
     accessToken
+  }
+`
+
+export const AllCommercialsQuery = gql`
+  query {
+    commercials {
+      nodes {
+        id
+        url
+      }
+    }
   }
 `

@@ -51,8 +51,18 @@ const LoggedInHamburger = () => {
             <Link href="/cart">
               <a className="pl-5 pr-2 py-1 bg-white rounded-md">Корзина</a>
             </Link>
-            <Link href="/">
-              <a className="pl-5 pr-2 py-1 bg-white rounded-md">Избранное</a>
+            <Link href="/orders">
+              <a className="pl-5 pr-2 py-1 bg-white rounded-md">Заказы</a>
+            </Link>
+            <Link href="/brand/create">
+              <a className="pl-5 pr-2 py-1 bg-white rounded-md">
+                Создать бренд
+              </a>
+            </Link>
+            <Link href="/product/create">
+              <a className="pl-5 pr-2 py-1 bg-white rounded-md">
+                Добавить товар
+              </a>
             </Link>
             <button
               className="pl-5 pr-2 py-1 bg-white text-right font-medium rounded-md"

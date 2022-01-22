@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { setCarts } from '../app/slices/cartSlice'
@@ -10,10 +11,19 @@ import CartDto from '../dtos/CartDto'
 import { GetUserCartsQuery } from '../graphql/cart'
 
 const CartPage = () => {
+  const router = useRouter()
   const dispatch = useAppDispatch()
   const carts = useAppSelector((state) => state.cart.carts)
 
   const { data, loading, error, refetch } = useQuery(GetUserCartsQuery)
+
+  const isAuth = useAppSelector((state) => state.user.isAuth)
+
+  useEffect(() => {
+    if (!isAuth) {
+      router.push('/')
+    }
+  }, [router, isAuth])
 
   useEffect(() => {
     if (data !== undefined) {

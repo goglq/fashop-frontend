@@ -8,7 +8,7 @@ type Props = {
 
 const ProductImageCarousel = ({ className, productImages }: Props) => {
   const [currentImageId, setCurrentImageId] = useState<number>(
-    productImages![0].id
+    productImages![0]?.id
   )
 
   return (
@@ -37,7 +37,7 @@ const ProductImageCarousel = ({ className, productImages }: Props) => {
             productImages &&
             productImages.filter(
               (productImage) => productImage.id === currentImageId
-            )[0].url
+            )[0]?.url
           }`}
           alt=""
           className="h-full w-full object-contain rounded-lg"

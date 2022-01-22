@@ -3,16 +3,41 @@ import CommonLayout from '../components/CommonLayout'
 import CartDto from '../dtos/CartDto'
 import { AddOrderMutation } from '../graphql/order'
 import { GetUserCartsQuery } from '../graphql/cart'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useAppSelector } from '../app/hooks'
 
-type Props = {
-  userCarts: CartDto[]
-}
+const OrderPage = () => {
+  const router = useRouter()
 
-const OrderPage = ({ userCarts }: Props) => {
+  const [city, setCity] = useState('')
+  const [street, setStreet] = useState('')
+  const [building, setBuilding] = useState('')
+  const [section, setSection] = useState('')
+  const [housing, setHousing] = useState('')
+  const [postIndex, setPostIndex] = useState('')
+
+  const [name, setName] = useState('')
+  const [surname, setSurname] = useState('')
+
   const cartQuery = useQuery(GetUserCartsQuery)
 
   const [orderFunction, { data, loading, error }] =
     useMutation(AddOrderMutation)
+
+  const isAuth = useAppSelector((state) => state.user.isAuth)
+
+  useEffect(() => {
+    if (!isAuth) {
+      router.push('/')
+    }
+  }, [router, isAuth])
+
+  useEffect(() => {
+    if (data) {
+      router.push('/orders')
+    }
+  }, [data, router])
 
   if (loading) return <div>loading</div>
 
@@ -27,7 +52,11 @@ const OrderPage = ({ userCarts }: Props) => {
             className="flex flex-col justify-between h-full p-5"
             onSubmit={(e) => {
               e.preventDefault()
-              orderFunction()
+              orderFunction({
+                variables: {
+                  address: `город ${city}, улица ${street}, дом ${building}, строение ${section}, корпус ${housing}, почтовый индекс: ${postIndex}, имя: ${name}, фамилия: ${surname}`,
+                },
+              })
             }}
           >
             <div className="space-y-5">
@@ -35,32 +64,44 @@ const OrderPage = ({ userCarts }: Props) => {
                 <label className="ml-2 text-2xl text-white">Адрес</label>
                 <div className="space-y-2">
                   <input
+                    value={city}
+                    onChange={(e) => setCity(e.currentTarget.value)}
                     type="text"
                     placeholder="Город"
                     className="w-full p-2 rounded-md outline-none"
                   />
                   <input
+                    value={street}
+                    onChange={(e) => setStreet(e.currentTarget.value)}
                     type="text"
                     placeholder="Улица"
                     className="w-full p-2 rounded-md outline-none"
                   />
                   <div className="grid grid-cols-3 grid-row-2 gap-2">
                     <input
+                      value={building}
+                      onChange={(e) => setBuilding(e.currentTarget.value)}
                       type="text"
                       placeholder="Дом"
                       className="w-full p-2 rounded-md outline-none"
                     />
                     <input
+                      value={section}
+                      onChange={(e) => setSection(e.currentTarget.value)}
                       type="text"
                       placeholder="Строение"
                       className="w-full p-2 rounded-md outline-none"
                     />
                     <input
+                      value={housing}
+                      onChange={(e) => setHousing(e.currentTarget.value)}
                       type="text"
                       placeholder="Корпус"
                       className="w-full p-2 rounded-md outline-none"
                     />
                     <input
+                      value={postIndex}
+                      onChange={(e) => setPostIndex(e.currentTarget.value)}
                       type="text"
                       placeholder="Почтовый индекс"
                       className="w-full p-2 rounded-md outline-none"
@@ -73,18 +114,17 @@ const OrderPage = ({ userCarts }: Props) => {
                 <div className="space-y-2">
                   <div className="grid grid-cols-3 gap-2">
                     <input
+                      value={surname}
+                      onChange={(e) => setSurname(e.currentTarget.value)}
                       type="text"
                       placeholder="Фамилия"
                       className="w-full p-2 rounded-md outline-none"
                     />
                     <input
+                      value={name}
+                      onChange={(e) => setName(e.currentTarget.value)}
                       type="text"
                       placeholder="Имя"
-                      className="w-full p-2 rounded-md outline-none"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Отчество"
                       className="w-full p-2 rounded-md outline-none"
                     />
                   </div>

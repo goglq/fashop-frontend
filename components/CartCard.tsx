@@ -38,13 +38,14 @@ const CartCard = ({ cart }: Props) => {
           src={cart.product.productImages[0].url}
           alt=""
         />
-        <p className="text-2xl">{cart.product.name}</p>
+        <p className="text-2xl cursor-default">{cart.product.name}</p>
       </div>
-      <div className="flex justify-center">
-        <CartCounter cart={cart} />
+      <div className="flex justify-center items-center">
+        {/* <CartCounter cart={cart} /> */}
+        <span className="text-2xl">Количество: {cart.count}</span>
       </div>
-      <div className="flex justify-between items-center pr-5 space-x-10">
-        <p className="text-3xl mr-10">${cart.product.price}</p>
+      <div className="flex justify-end items-center pr-5 space-x-10">
+        <p className="text-3xl mr-10 cursor-default">${cart.product.price}</p>
         <button
           className="px-5 py-2 rounded-md bg-red-400 text-3xl text-white font-bold"
           onClick={(e) => {
