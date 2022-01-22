@@ -50,11 +50,11 @@ const CreateBrandPage = () => {
             })
           }}
         >
-          {error && (
+          {/* {error && (
             <div className="px-2 py-1 rounded-md bg-red-500 text-white font-medium">
               {error.graphQLErrors[0].extensions.message}
             </div>
-          )}
+          )} */}
           <input
             className="px-3 py-2 rounded-md font-medium outline-none"
             type="text"

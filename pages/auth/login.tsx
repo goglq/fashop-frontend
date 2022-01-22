@@ -69,6 +69,11 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.currentTarget.value)}
           />
         </div>
+        {/* {error && (
+          <div className="py-2 rounded-md bg-red-500 text-white font-medium text-center">
+            {error.graphQLErrors}
+          </div>
+        )} */}
         <div className="flex flex-col space-y-2">
           <button
             className="py-2 rounded-md bg-fashop-1 text-white"
@@ -84,11 +89,6 @@ const LoginPage = () => {
               Регистрация
             </a>
           </Link>
-          {error && (
-            <div className="rounded-md bg-red-500 text-white font-medium text-center">
-              {error.graphQLErrors[0].extensions.message}
-            </div>
-          )}
         </div>
       </form>
     </div>

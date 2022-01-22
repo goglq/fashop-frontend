@@ -75,11 +75,11 @@ const RegistrationPage = () => {
             onChange={(e) => setRepeatPassword(e.currentTarget.value)}
           />
         </div>
-        {error && (
+        {/* {error && (
           <div className="flex justify-center items-center py-2 rounded-md bg-red-500 text-white font-medium">
             {error.graphQLErrors[0].extensions.message}
           </div>
-        )}
+        )} */}
         <button
           className="py-2 rounded-md bg-fashop-1 text-white"
           type="submit"
