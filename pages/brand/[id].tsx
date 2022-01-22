@@ -32,7 +32,7 @@ const BrandPage = ({ brand }: Props) => {
       getBrandProducts({ variables: { brandId: brand.id } })
       getBrandSaleProducts({ variables: { brandId: brand.id } })
     }
-  }, [brand])
+  }, [brand, getBrandProducts, getBrandSaleProducts])
 
   if (router.isFallback) {
     return (
@@ -50,6 +50,7 @@ const BrandPage = ({ brand }: Props) => {
       <div className="flex justify-center items-center h-48 w-full rounded-lg overflow-hidden">
         <img className="w-full" src={brand.brandImage.header} alt="" />
       </div>
+      <h2 className="text-5xl font-bold text-right">{brand.name}</h2>
       <div className="space-y-3">
         <div className="ml-1 text-2xl font-medium">Товары</div>
         {BrandProducts.error && <div>{BrandProducts.error.message}</div>}

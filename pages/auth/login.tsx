@@ -16,7 +16,11 @@ const LoginPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const [loginFunction, { data, loading, error }] = useMutation(LoginMutation)
+  const [loginFunction, { data, loading, error }] = useMutation(LoginMutation, {
+    onError: (err) => {
+      console.log(err)
+    },
+  })
 
   useEffect(() => {
     console.log('data, router, dispatch')

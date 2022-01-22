@@ -28,7 +28,12 @@ const CreateProductPage = () => {
   const [index, setIndex] = useState<number>(1)
 
   const [createProductFunction, { data, loading, error }] = useMutation(
-    CreateProductMutation
+    CreateProductMutation,
+    {
+      onError: (err) => {
+        console.log(err)
+      },
+    }
   )
 
   const isAuth = useAppSelector((state) => state.user.isAuth)

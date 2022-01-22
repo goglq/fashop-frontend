@@ -12,8 +12,14 @@ const RegistrationPage = () => {
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
 
-  const [registerFunction, { data, loading, error }] =
-    useMutation(RegisterMutation)
+  const [registerFunction, { data, loading, error }] = useMutation(
+    RegisterMutation,
+    {
+      onError: (err) => {
+        console.log(err)
+      },
+    }
+  )
 
   useEffect(() => {
     if (data) {

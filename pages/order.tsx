@@ -22,8 +22,14 @@ const OrderPage = () => {
 
   const cartQuery = useQuery(GetUserCartsQuery)
 
-  const [orderFunction, { data, loading, error }] =
-    useMutation(AddOrderMutation)
+  const [orderFunction, { data, loading, error }] = useMutation(
+    AddOrderMutation,
+    {
+      onError: (err) => {
+        console.log(err)
+      },
+    }
+  )
 
   const isAuth = useAppSelector((state) => state.user.isAuth)
 
