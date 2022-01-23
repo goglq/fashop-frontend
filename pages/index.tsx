@@ -34,7 +34,12 @@ const Home = () => {
     randomQuery.refetch()
   }, [])
 
-  if (productsQuery.loading) return <p>Loading...</p>
+  if (productsQuery.loading)
+    return (
+      <div className="h-rel-screen">
+        <Loading />
+      </div>
+    )
 
   if (productsQuery.error) return <p>ERROR: {productsQuery.error.message}</p>
 

@@ -6,19 +6,20 @@ import { GetUserCartsQuery } from '../graphql/cart'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useAppSelector } from '../app/hooks'
+import Loading from '../components/Loading'
 
 const OrderPage = () => {
   const router = useRouter()
 
-  const [city, setCity] = useState('')
-  const [street, setStreet] = useState('')
-  const [building, setBuilding] = useState('')
-  const [section, setSection] = useState('')
-  const [housing, setHousing] = useState('')
-  const [postIndex, setPostIndex] = useState('')
+  const [city, setCity] = useState<string>('')
+  const [street, setStreet] = useState<string>('')
+  const [building, setBuilding] = useState<string>('')
+  const [section, setSection] = useState<string>('')
+  const [housing, setHousing] = useState<string>('')
+  const [postIndex, setPostIndex] = useState<string>('')
 
-  const [name, setName] = useState('')
-  const [surname, setSurname] = useState('')
+  const [name, setName] = useState<string>('')
+  const [surname, setSurname] = useState<string>('')
 
   const cartQuery = useQuery(GetUserCartsQuery)
 
@@ -45,9 +46,12 @@ const OrderPage = () => {
     }
   }, [data, router])
 
-  if (loading) return <div>loading</div>
-
-  if (error) return <div>{error.message}</div>
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-rel-screen">
+        <Loading />
+      </div>
+    )
 
   return (
     <div className="grid grid-cols-2 grid-rows-3 gap-5 h-rel-screen mt-5">
@@ -60,7 +64,14 @@ const OrderPage = () => {
               e.preventDefault()
               orderFunction({
                 variables: {
-                  address: `город ${city}, улица ${street}, дом ${building}, строение ${section}, корпус ${housing}, почтовый индекс: ${postIndex}, имя: ${name}, фамилия: ${surname}`,
+                  city: city,
+                  street: street,
+                  building: building,
+                  section: section,
+                  housing: housing,
+                  postIndex: postIndex,
+                  name: name,
+                  surname: surname,
                 },
               })
             }}
@@ -137,14 +148,21 @@ const OrderPage = () => {
                 </div>
               </div>
             </div>
-            <button className="flex justify-center items-center py-2 rounded-md bg-fashop-1 text-white font-medium">
-              Заказать
-            </button>
+            <div className="flex flex-col items-stretch space-y-2">
+              {error && (
+                <div className="flex justify-center items-center rounded-md py-2 bg-red-500 text-white font-medium">
+                  {error.message}
+                </div>
+              )}
+              <button className="flex justify-center items-center py-2 rounded-md bg-fashop-1 text-white font-medium">
+                Заказать
+              </button>
+            </div>
           </form>
         )}
       </div>
-      <div className="bg-fashop-4 rounded-xl p-5 cursor-default">
-        Данные для оплаты
+      <div className="flex justify-center items-center bg-fashop-4 rounded-xl p-5 cursor-default text-lg font-medium">
+        Заглушка для оплаты
       </div>
       <div className="row-span-full rounded-xl bg-fashop-4 p-5 cursor-default">
         <h2 className="text-2xl text-white">Заказ</h2>

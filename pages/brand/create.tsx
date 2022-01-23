@@ -65,14 +65,14 @@ const CreateBrandPage = () => {
           <input
             className="px-3 py-2 rounded-md font-medium outline-none"
             type="url"
-            placeholder="Ссылка на превью бренда"
+            placeholder="Ссылка на превью бренда 200x100"
             value={thumbnail}
             onChange={(e) => setThumbnail(e.currentTarget.value)}
           />
           <input
             className="px-3 py-2 rounded-md font-medium outline-none"
             type="url"
-            placeholder="Ссылка на баннер бренда"
+            placeholder="Ссылка на баннер бренда 1400x200"
             value={header}
             onChange={(e) => setHeader(e.currentTarget.value)}
           />
